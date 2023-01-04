@@ -1,28 +1,32 @@
-<html>
-  <head>
-    <title>Product List</title>
-  </head>
-  <body>
-    <h1>Product List</h1>
-    <ul id="product-list">
-    </ul>
-    <input type="button" value="Add" onclick="addProduct()">
-    <script>
-      function addProduct() {
-        window.location.href = "add.html";
-      }
+import * as React from 'react'
 
-      function addProductToList(name, price) {
-        var productList = document.getElementById("product-list");
-        var item = document.createElement("li");
-        item.innerHTML = name + " - $" + price + " <button onclick='removeProduct(this)'>Delete</button>";
-        productList.appendChild(item);
-      }
+export default function wines() {
+  let items = []
+  let [winesTitles, setwinesTitle] = React.useState([])
 
-      function removeProduct(item) {
-        var productList = document.getElementById("product-list");
-        productList.removeChild(item.parentNode);
-      }
-    </script>
-  </body>
-</html>
+  React.useEffect(async () => {
+    let res = await fetch('https://api.sampleapis.com/wines/reds')
+    let wines = await res.json()
+
+    for (let i = 0; i < wines.length; i++) {
+      console.log(wines[i].title)
+      items.push(
+        <li>
+          <img src={wines[i].imageUrl} alt={wines[i].title} />
+          <div style={{ width: "100%", overflow: "hidden" }}>
+            <div style={{ width: "600px", float: "left" }}>Left</div>
+            <div style={{ marginLeft: "620px" }}>Right</div>
+          </div>
+        </li>
+      )
+    }
+
+    setwinesTitle(items)
+  }, [])
+
+  return (
+    <div>
+      <ul>{winesTitles}</ul>
+    </div>
+  )
+}
