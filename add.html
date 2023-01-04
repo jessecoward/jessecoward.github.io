@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <title>Add Product</title>
+  </head>
+  <body>
+    <h1>Add Product</h1>
+    <form id="add-form">
+      <label for="name">Name:</label><br>
+      <input type="text" id="name" name="name"><br>
+      <label for="price">Price:</label><br>
+      <input type="text" id="price" name="price"><br>
+      <input type="submit" value="Submit" onclick="submitForm()">
+    </form> 
+    <script>
+      function submitForm() {
+        var name = document.getElementById("name").value;
+        var price = document.getElementById("price").value;
+        window.opener.addProductToList(name, price);
+        window.close();
+      }
+    </script>
+  </body>
+</html>
