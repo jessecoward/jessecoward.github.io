@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Product Discount List</title>
+  <style>
+    table {
+      width: 100%;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <h2>Product Discount List</h2>
+  <table id="discountList">
+    <tr>
+      <th>Product</th>
+      <th>Price (THB/unit)</th>
+      <th>Quantity</th>
+      <th>Discount (THB)</th>
+      <th>Total</th>
+    </tr>
+    <tr>
+      <td>A Product</td>
+      <td>100</td>
+      <td>10</td>
+      <td>50</td>
+      <td>950</td>
+    </tr>
+  </table>
+  <br>
+  <button onclick="clearTable()">Clear</button>
+  <button onclick="window.location.href='add.html'">Add</button>
+  <p id="totalDiscount">Total Discount: 50 THB</p>
+  <script>
+    function clearTable() {
+      var table = document.getElementById("discountList");
+      for (var i = 1; i < table.rows.length; i++) {
+        table.deleteRow(i);
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!-- add.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Product</title>
+</head>
+<body>
+  <h2>Add Product</h2>
+  <form>
+    <label for="product">Product:</label>
+    <input type="text" id="product" name="product"><br><br>
+    <label for="price">Price (THB/unit):</label>
+    <input type="number" id="price" name="price"><br><br>
+    <label for="quantity">Quantity:</label>
+    <input type="number" id="quantity" name="quantity"><br><br>
+    <label for="discount">Discount (THB):</label>
+    <input type="number" id="discount" name="discount"><br><br>
+    <button onclick="addProduct()">Add</button>
+    <button onclick="window.location.href='index.html'">Cancel</button>
+  </form>
+  <script>
+    function addProduct() {
+      var product = document.getElementById("product").value;
+      var price = document.getElementById("price").value;
+      var quantity = document.getElementById("quantity").value;
+      var discount = document.getElementById("discount").value;
+      var total = price * quantity - discount;
+      
+      var table = document.getElementById("discountList");
+      var row = table.insertRow();
+      var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+      var cell3 = row.insertCell(2);
+      var cell4 = row.insertCell(3);
+      var cell5 = row.insertCell(4);
+      cell1.innerHTML = product;
+      cell2.innerHTML = price;
+      cell3.innerHTML = quantity;
+      cell4.innerHTML = discount;
+      cell5.innerHTML = total;
+      
+      window.opener.calculateTotalDiscount();
+      window.close();
+    }
+  </script>
