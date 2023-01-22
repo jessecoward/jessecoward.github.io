@@ -1,7 +1,7 @@
 import * as React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, ButtonGroup, Button, Row, Col } from 'react-bootstrap';
-import WineCard from '../../components/WineCard';
+import WineCard from 'E:\jessecoward.github.io\my-hello-world-starter\src\pages\WineCard';
 import { useLocalStorage } from 'react-use';
 
 const dummyPrice = 99
