@@ -1,7 +1,12 @@
-// pages/index.js
-
 import React from 'react'
 
-export default function Index() {
-  return <div>jie</div>
+const IndexPage = () => {
+  return (
+    <div>
+      <h1>jie</h1>
+      <p>Welcome to my Next.js website</p >
+    </div>
+  )
 }
+
+export default IndexPage
