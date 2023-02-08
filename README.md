@@ -1,2 +1,0 @@
-# jessecoward.github.io
-jie
