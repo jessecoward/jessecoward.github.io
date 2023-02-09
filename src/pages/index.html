@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>calculateGPA</title>
+		<style>
+		#GPAForm{
+			text-align: center;
+		}
+		.title{
+			text-align: center;
+			color: #FF0000;
+		}
+		table.courses{
+			text-align: center;
+			border-collapse:collapse;
+		}
+		th{
+			background-color: lightblue;
+		}
+		.point, .gradePoint, #totalGradePoint, #totalCredit, #gpa{
+			cursor: default;
+			border: 0px;
+			border-bottom: red solid 1px;
+			background-color: inherit;
+			text-align: center;
+		}
+		.addCourse_btn{
+			background-color: greenyellow;
+		}
+		.removeCourse_btn{
+			background-color: yellow;
+		}
+		</style>
+		
+		<script type='text/javascript'>
+		
+		function getCredit(credit){
+			UpdataGradePoint(credit.parentNode.parentNode);
+			UpdataTotalCredit();			
+			UpdataTotalGradePoint();		
+			UpdataGPA();					
+			}
+		function getScore(Elem){
+			score = Number(Elem.value);
+			var point;
+			if(score > 100)alert("ENTER:");
+			else if(score >= 90){
+				point = 4.0;
+			}
+			else if(score >= 87){
+				point = 3.7;
+			}
+			else if(score >= 84){
+				point = 3.4
+			}
+			else if(score >= 81){
+				point = 3.0;
+			}
+			else if(score >= 78){
+				point = 2.7;
+			}
+			else if(score >= 75){
+				point = 2.4;
+			}
+			else if(score >= 72){
+				point = 2.1;
+			}
+			else if(score >= 68){
+				point = 1.7;
+			}
+			else if(score >= 64){
+				point = 1.3;
+			}
+			else if(score >= 60){
+				point = 1.0;
+			}
+			else if(score >= 0){
+				point = 0;
+			}
+			else {
+				alert("ENTER:");
+			}
+			
+			Elem.parentNode.parentNode.getElementsByClassName("point")[0].value = point.toFixed(1);
+			UpdataGradePoint(Elem.parentNode.parentNode);	
+			UpdataTotalCredit();							
+			UpdataTotalGradePoint();   						
+			UpdataGPA();									
+		}
+		
+		function UpdataGradePoint(course){
+			var point = course.getElementsByClassName("point")[0].value;
+			var credit = course.getElementsByClassName("credit")[0].value;
+			if(credit && point){
+				var gradePoint = point * credit;
+				course.getElementsByClassName("gradePoint")[0].value = gradePoint.toFixed(2);
+			}
+		}
+		
+		function UpdataTotalCredit(){	
+			var credits = document.getElementsByClassName("credit");
+			var totalCredit = 0;							
+			for(var j = 0; j < credits.length; j++){
+				if(credits[j].value)totalCredit += Number (credits[j].value);
+			}
+			document.getElementById("totalCredit").value=totalCredit;
+		}
+		
+		function UpdataTotalGradePoint(){	
+			var GradePoints = document.getElementsByClassName("gradePoint");
+			var totalGradePoint = 0;
+			for(var i = 0; i < GradePoints.length; i ++){
+				if(GradePoints[i].value)totalGradePoint += Number(GradePoints[i].value);
+				}
+			document.getElementById("totalGradePoint").value = parseFloat(totalGradePoint);
+			}
+		
+		function UpdataGPA(){			
+			var totalCredit = Number(document.getElementById("totalCredit").value);
+			var totalGradePoint = Number(document.getElementById("totalGradePoint").value);
+			if(totalCredit && totalGradePoint){
+				var GPA = totalGradePoint / totalCredit;
+				document.getElementById("gpa").value = parseFloat(GPA);
+			}
+		}
+		
+			var NewCourse;
+			window.onload=function(){
+				 NewCourse = document.getElementsByClassName("course")[0].cloneNode(true);
+			}
+		function AddCourse(){											
+			var tr = NewCourse.cloneNode(true);						
+			var table=document.getElementById("table");	
+			table.appendChild(tr);										
+			tr.getElementsByClassName("credit")[0].value = "";
+			tr.getElementsByClassName("score")[0].value = "";
+			tr.getElementsByClassName("point")[0].value = "";
+			tr.getElementsByClassName("gradePoint")[0].value = "";
+			UpdataTotalCredit();							
+			UpdataTotalGradePoint();								
+			UpdataGPA();												
+			}
+		function DeleteCourse(NowRow){
+			var courses = document.getElementsByClassName("course");
+			if(courses.length <= 1)alert("At last row");
+			else {
+			NowRow.remove();											
+			UpdataTotalCredit();								
+			UpdataTotalGradePoint();								
+			UpdataGPA();											
+			}
+		}
+		</script>
+	</head>
+	<body>
+		<h2 class='title'>calculateGPA</h2>
+		<p align="center">Name：jie	ID：6237432</p>
+		<div id="GPAForm" align="center">
+		<table border="1" class="courses" id="table">
+			<tr>
+				<th>Credit</th>
+				<th>Score</th>
+				<th>Point</th>
+				<th>Grade Point</th>
+				<th></th>
+			</tr>
+			<tr id="course" class="course">
+				<td width="10px"> 
+				<input type="text" size="4" maxlength="4" placeholder="credit" class="credit" name="credit" onchange="getCredit(this)">
+				</td>
+				<td>
+					<input type="text" size="3" maxlength="3" oninput="if(value.length>3) value=value.slice(0,3)"/ placeholder="score" class="score" onchange="getScore(this)">
+					</td>
+				<td>
+					<input type="text" size="4" maxlength="4" placeholder="point" class="point" readonly="readonly" />
+					</td>
+				<td>
+					<input type="text" size="7" maxlength="5" placeholder="greditpoint" class="gradePoint" readonly="readonly" />
+					</td>
+				<td><button class="removeCourse_btn" onclick="DeleteCourse(this.parentNode.parentNode)">DeleteCourse</td>
+			</tr>
+		</table>
+		</div>
+		<button type="button" class="addCourse_btn" id="addCourse" onclick="AddCourse()">AddCours</button>
+		<hr>
+		<div id="totals">
+		  <label>totalCredit：
+		    <input id="totalCredit" type="text" size="7" maxlength="7" placeholder="please fill out the form first" readonly="readonly" />
+		  </label>
+		  <label>totalGradePoint：
+		    <input id="totalGradePoint" type="text" size="7" maxlength="7" placeholder="please fill out the form first" readonly="readonly" />
+		  </label>
+		  <label>GPA：
+		    <input id="gpa" type="text" size="7" maxlength="7" placeholder="please fill out the form first" readonly="readonly" />
+		  </label>
+		</div>
+		<hr>
+		THX！
+	</body>
+</html>
+
